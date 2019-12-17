@@ -1,7 +1,7 @@
 import cv2
 
 #read an image
-lena_image = cv2.imread("../Samples/lena.png", 1)
+lena_image = cv2.imread("../Samples/lena.png", 1) #what does 1 mean?
 #print(lena_image.shape)
 
 #render an image from its matrix form

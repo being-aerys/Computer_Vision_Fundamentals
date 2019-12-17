@@ -30,15 +30,34 @@ while True:
     if pressed_key == ord("q"):
         break
 
-
 '''---------------------------------------read from a video file--------------------------------------------------'''
-video = cv2.VideoCapture("../Samples/Video_Sample.mp4")
-#work on it only if it is open --> only if the path is correct
+video_capture = cv2.VideoCapture("../Samples/Video_Sample.mp4")
+#can retrieve several properties of the video capture using get() method
+frame_width = video_capture.get(cv2.CAP_PROP_FRAME_WIDTH) #means  Capture property == Frame width
+print("Frame Width = ", frame_width)
 
-while video.isOpened() == True:
-    is_frame_available, frame = video.read()
+
+
+fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
+#VIDEO Output to save in a file
+video_output = cv2.VideoWriter("Filename_to_save.mp4", fourcc, 20.0, (720, 1280)) #VVI this dimension of the video source, either th camera or the video file must matchqq
+
+#work on it only if it is open --> only if the path is correct
+while video_capture.isOpened() == True:
+    is_frame_available, frame = video_capture.read()
     #display the video
-    cv2.imshow("Video display_window", frame)
-    pressed_key = cv2.waitKey(1)
-    if pressed_key == ord("q"):
+    if is_frame_available == True:
+        #Save the frame
+        video_output.write(frame)
+
+        cv2.imshow("Video display_window", frame)
+        pressed_key = cv2.waitKey(1)
+        if pressed_key == ord("q"):
+            break
+    else:
         break
+
+video_output.release()
+video_captured.release()
+video_capture.release()
+cv2.destroyAllWindows()
